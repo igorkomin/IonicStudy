@@ -3,23 +3,23 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
+import { Facebook } from '@ionic-native/facebook'
 import { AppComponent } from './app.component';
-import { HomePage } from './pages/home/home';
+import { HomePage } from '../pages/home/home';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { GooglePlus } from '@ionic-native/google-plus';
-import { LoginPage } from './pages/login/login';
-import { GoogleAuthService } from './shared/google-auth.service';
+import { LoginPage } from '../pages/login/login';
+import { AuthService } from '../shared/auth.service';
 import { Toast } from '@ionic-native/toast';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBm7nU1546f3Ak3e7TmY7u_Kr4xk_u4tNw",
-    authDomain: "bamboo-weft-227409.firebaseapp.com",
-    databaseURL: "https://bamboo-weft-227409.firebaseio.com",
-    projectId: "bamboo-weft-227409",
-    storageBucket: "bamboo-weft-227409.appspot.com",
-    messagingSenderId: "453175894946"
+  apiKey: "AIzaSyBm7nU1546f3Ak3e7TmY7u_Kr4xk_u4tNw",
+  authDomain: "bamboo-weft-227409.firebaseapp.com",
+  databaseURL: "https://bamboo-weft-227409.firebaseio.com",
+  projectId: "bamboo-weft-227409",
+  storageBucket: "bamboo-weft-227409.appspot.com",
+  messagingSenderId: "453175894946"
 }
 
 @NgModule({
@@ -41,12 +41,13 @@ const firebaseConfig = {
     LoginPage
   ],
   providers: [
-    GoogleAuthService,
+    Facebook,
+    AuthService,
     GooglePlus,
     SplashScreen,
     StatusBar,
     Toast,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

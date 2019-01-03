@@ -3,11 +3,13 @@ import firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Platform } from "ionic-angular";
+import { Facebook } from '@ionic-native/facebook';
 
 @Injectable()
-export class GoogleAuthService {
+export class AuthService {
   constructor(
     private angularFireAuth: AngularFireAuth,
+    private facebook: Facebook,
     private googlePlus: GooglePlus,
     private platform: Platform,
   ) { }
@@ -34,6 +36,34 @@ export class GoogleAuthService {
     }
     else {
       return this.webGoogleLogin();
+    }
+  }
+
+  private async nativeFacebookLogin(): Promise<any> {
+    return this.facebook.login(['email']).then(
+        response => {
+            const facebookCredential = firebase.auth.FacebookAuthProvider
+                .credential(response.authResponse.accessToken);
+
+            firebase.auth().signInWithCredential(facebookCredential)
+                .then(success => {
+                    console.log('Firebase success: ' + JSON.stringify(success));
+                });
+        }
+    ).catch(error => console.error(error));
+  }
+
+  private async webFacebookLogin() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return await this.angularFireAuth.auth.signInWithPopup(provider);
+  }
+
+  public facebookLogin(){
+    if (this.platform.is('cordova')) {
+      return this.nativeFacebookLogin();
+    }
+    else {
+      return this.webFacebookLogin();
     }
   }
 

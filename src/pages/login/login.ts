@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { GoogleAuthService } from '../../shared/google-auth.service';
-import { HomePage } from '../../home/home/home';
+import { AuthService } from '../../shared/auth.service';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-login',
@@ -10,7 +10,7 @@ import { HomePage } from '../../home/home/home';
 export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController,
-    private authService: GoogleAuthService) {
+    private authService: AuthService) {
   }
 
   showAlert(title: string, message: string) {
@@ -29,6 +29,17 @@ export class LoginPage {
           this.navCtrl.setRoot(HomePage);
         }
       },
+      error => {
+        if (error.code != 'auth/popup-closed-by-user') {
+          this.showAlert('Error!', error);
+        }
+      }
+    );
+  }
+
+  facebookLogin() {
+    this.authService.facebookLogin().then(
+      () => this.navCtrl.setRoot(HomePage),
       error => {
         if (error.code != 'auth/popup-closed-by-user') {
           this.showAlert('Error!', error);
