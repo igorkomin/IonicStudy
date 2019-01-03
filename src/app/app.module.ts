@@ -5,11 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { AppComponent } from './app.component';
-import { HomePage } from './home/home/home';
+import { HomePage } from './pages/home/home';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { GooglePlus } from '@ionic-native/google-plus';
-import { LoginPage } from './login/login/login';
+import { LoginPage } from './pages/login/login';
 import { GoogleAuthService } from './shared/google-auth.service';
 import { Toast } from '@ionic-native/toast';
 
